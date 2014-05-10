@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Pic A Pix</title>
+    <script src="./scripts/angular.js"></script>
+    <script src="./scripts/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="./style/main.css">
+</head>
+<body ng-controller='myCtrl'>
+
+<h1>Choose Colors:</h1>
+<ol>
+    <li ng-repeat="color in colors">
+        <input type="color" ng-model="color.key">
+    </li>
+    <li>
+        <button ng-click="addColor()">+</button>
+    </li>
+</ol>
+
+<h1>Size:</h1> <input type="number" min="0" max="100" ng-model="size.rows"/> X <input type="number"
+                                                                                      min="0"
+                                                                                      max="100"
+                                                                                      ng-model="size.cols"/>
+
+<h3>(Max 100x100)</h3>
+
+<h1>Board:</h1>
+
+<h3>(Hold the number for the desired color and hover with the cursor over the board)</h3>
+
+<table style="width:100%">
+    <tr>
+        <td></td>
+        <td class="no-padding">
+            <table>
+                <tr>
+                    <td ng-repeat="col in cols" style="vertical-align:bottom; padding:0" class="no-padding">
+                        <table>
+                            <tr ng-repeat="cell in col track by $index">
+                                <td class="box">{{cell}}</td>
+                            </tr>
+                        </table>
+                        <table ng-if="!col.length">
+                            <tr>
+                                <td class="box"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="no-padding">
+            <table style="direction: rtl; float:right">
+                <tr ng-repeat="row in rows">
+                    <td ng-if="!row.length" class="box"></td>
+                    <td ng-repeat="cell in row | reverse track by $index" class="box">{{cell}}</td>
+                </tr>
+            </table>
+        </td>
+        <td class="no-padding">
+            <table class="border">
+                <tr ng-repeat="row in board" id="{{$index}}">
+                    <td ng-repeat="cell in row" id="{{$index}}" ng-mouseenter="actByState(cell)"
+                        ng-mouseleave="disableLastCell()" ng-style="cell.style" class="box"> </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<input type="text" ng-model="boardKey"/>
+<button ng-click="saveBoard(boardKey)">Save</button>
+<button ng-click="loadBoard(boardKey)">Load</button>
+<button ng-click="removeBoard(boardKey)">Delete</button>
+<button ng-click="generateGame()">Start</button>
+
+</body>
+</html>
