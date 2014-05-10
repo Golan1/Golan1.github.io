@@ -29,7 +29,7 @@ angular.module('myApp').controller('myCtrl', function SomeController($scope, $do
         {
             $scope.selectedColorIndex = e.keyCode - 49;
             //$scope.actByState($scope.lastCell);
-            //$scope.$evalAsync();
+            $scope.$evalAsync();
         }
     });
 

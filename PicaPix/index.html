@@ -62,7 +62,8 @@
             <h1>Choose Colors:</h1>
             <ol>
                 <li ng-repeat="color in colors">
-                    <input type="color" ng-model="color.key">
+                    <input type="checkbox" ng-show="$index == selectedColorIndex" disabled="true"/>
+                    <input type="color" ng-model="color.key" />
                     <button ng-click="removeColor($index)">-</button>
                 </li>
                 <li>
