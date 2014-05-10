@@ -33,16 +33,22 @@ angular.module('myApp').controller('myCtrl', function SomeController($scope, $do
         }
     });
 
+
 //    $document.on("keyup", function(e){
 //        $scope.selectedColor = undefined;
 //        $scope.$evalAsync();
 //    });
 
-    $document.on("mousedown", function(e){
+//    $document.on("mousedown", function(e){
+//        bPaint = true;
+//        $scope.actByState($scope.lastCell);
+//        $scope.$evalAsync();
+//    })
+
+    $scope.startPaint = function(){
         bPaint = true;
         $scope.actByState($scope.lastCell);
-        $scope.$evalAsync();
-    })
+    };
 
     $document.on("mouseup", function(e){
         bPaint = false;

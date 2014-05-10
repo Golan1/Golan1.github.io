@@ -51,7 +51,7 @@
             </table>
         </td>
         <td class="no-padding">
-            <table class="border" style="cursor: crosshair">
+            <table class="border" style="cursor: crosshair" ng-mousedown="startPaint()">
                 <tr ng-repeat="row in board" id="{{$index}}">
                     <td ng-repeat="cell in row" id="{{$index}}" ng-mouseenter="actByState(cell)"
                         ng-mouseleave="disableLastCell()" ng-style="cell.style" class="box"> </td>
