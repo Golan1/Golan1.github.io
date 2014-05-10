@@ -12,6 +12,7 @@
 <ol>
     <li ng-repeat="color in colors">
         <input type="color" ng-model="color.key">
+        <button ng-click="removeColor($index)">-</button>
     </li>
     <li>
         <button ng-click="addColor()">+</button>
@@ -29,7 +30,7 @@
 
 <h3>(Hold the number for the desired color and hover with the cursor over the board)</h3>
 
-<table style="width:100%">
+<table style="width:100%" >
     <tr>
         <td></td>
         <td class="no-padding">
@@ -61,7 +62,7 @@
             </table>
         </td>
         <td class="no-padding">
-            <table class="border">
+            <table class="border" style="cursor: crosshair">
                 <tr ng-repeat="row in board" id="{{$index}}">
                     <td ng-repeat="cell in row" id="{{$index}}" ng-mouseenter="actByState(cell)"
                         ng-mouseleave="disableLastCell()" ng-style="cell.style" class="box"> </td>

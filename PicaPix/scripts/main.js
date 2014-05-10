@@ -1,6 +1,7 @@
-//document.onkeydown = function(e){
-//    console.log(e);
-//};
+// handling drag bug. consider apply only to the board
+document.ondragstart = function(e){
+    return false;
+};
 
 angular.module('myApp', []);
 
@@ -16,24 +17,47 @@ angular.module('myApp').controller('myCtrl', function SomeController($scope, $do
     $scope.size.rows = 20;
     $scope.size.cols = 20;
     $scope.board = [];
-    $scope.selectedColor = undefined;
+    $scope.selectedColorIndex = 0;
     $scope.rows =[];
     $scope.cols = [];
+
+    var bPaint = false;
 
 
     $document.on("keydown", function(e){
         if ($scope.colors.length > e.keyCode - 49 && e.keyCode > 48)
         {
-            $scope.selectedColor = $scope.colors[e.keyCode -49].key;
-            $scope.actByState($scope.lastCell);
-            $scope.$evalAsync();
+            $scope.selectedColorIndex = e.keyCode - 49;
+            //$scope.actByState($scope.lastCell);
+            //$scope.$evalAsync();
         }
     });
 
-    $document.on("keyup", function(e){
-        $scope.selectedColor = undefined;
+//    $document.on("keyup", function(e){
+//        $scope.selectedColor = undefined;
+//        $scope.$evalAsync();
+//    });
+
+    $document.on("mousedown", function(e){
+        bPaint = true;
+        $scope.actByState($scope.lastCell);
         $scope.$evalAsync();
+    })
+
+    $document.on("mouseup", function(e){
+        bPaint = false;
     });
+
+    $scope.actByState = function(cell){
+        if (!!cell)
+        {
+            $scope.lastCell = cell;
+            if (bPaint)
+            {
+                cell.style["background-color"] = $scope.colors[$scope.selectedColorIndex].key;
+            }
+        }
+    };
 
     $scope.$watch('size', function(val){
         $scope.board = [];
@@ -46,17 +70,6 @@ angular.module('myApp').controller('myCtrl', function SomeController($scope, $do
         }
     }, true);
 
-    $scope.actByState = function(cell){
-        if (!!cell)
-        {
-            $scope.lastCell = cell;
-            if (!!$scope.selectedColor)
-            {
-                cell.style["background-color"] = $scope.selectedColor;
-            }
-        }
-    };
-
     $scope.disableLastCell = function()
     {
         $scope.lastCell = undefined;
@@ -64,6 +77,9 @@ angular.module('myApp').controller('myCtrl', function SomeController($scope, $do
 
     $scope.addColor = function(){
         $scope.colors.push({key:""});
+    };
+    $scope.removeColor = function(index){
+      $scope.colors.splice(index, 1);
     };
 
     $scope.saveBoard = function(key){
